@@ -1,8 +1,7 @@
 import models.lombok.*;
 import models.pojo.RequestRegistrationBodyPojoModel;
 import models.pojo.ResponseRegistrationBodyPojoModel;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
@@ -14,6 +13,7 @@ import static specs.SingleResourceSpec.successGetSingleResourceResponseSpecifica
 import static specs.UsersSpec.getUsersRequestSpecification;
 import static specs.UsersSpec.successGetUsersResponseSpecification;
 
+@Tag("API")
 public class RegressApiTests extends TestBase {
     @Test
     @DisplayName("Successful registration (with Pojo)")
