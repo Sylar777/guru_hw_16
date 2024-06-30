@@ -7,11 +7,8 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static specs.RegistrationSpec.*;
-import static specs.SingleResourceSpec.getSingleResourceRequestSpecification;
-import static specs.SingleResourceSpec.successGetSingleResourceResponseSpecification;
-import static specs.UsersSpec.getUsersRequestSpecification;
-import static specs.UsersSpec.successGetUsersResponseSpecification;
+import static specs.RequestSpec.*;
+import static specs.ResponseSpec.*;
 
 @Tag("API")
 public class RegressApiTests extends TestBase {
@@ -28,7 +25,7 @@ public class RegressApiTests extends TestBase {
                     .when()
                     .post("/register")
                     .then()
-                    .spec(successRegistrationResponseSpecification)
+                    .spec(successResponse200Specification)
                     .extract().as(ResponseRegistrationBodyPojoModel.class);
         });
 
@@ -51,7 +48,7 @@ public class RegressApiTests extends TestBase {
                     .when()
                     .post("/register")
                     .then()
-                    .spec(successRegistrationResponseSpecification)
+                    .spec(successResponse200Specification)
                     .extract().as(ResponseRegistrationBodyLombokModel.class);
         });
 
@@ -73,7 +70,7 @@ public class RegressApiTests extends TestBase {
                     .when()
                     .post("/register")
                     .then()
-                    .spec(unsuccessRegistrationResponseSpecification)
+                    .spec(unsuccessResponse400Specification)
                     .extract().as(ResponseRegistrationBodyPojoModel.class);
         });
 
@@ -95,7 +92,7 @@ public class RegressApiTests extends TestBase {
                     .when()
                     .post("/register")
                     .then()
-                    .spec(unsuccessRegistrationResponseSpecification)
+                    .spec(unsuccessResponse400Specification)
                     .extract().as(ResponseRegistrationBodyLombokModel.class);
         });
 
@@ -116,7 +113,7 @@ public class RegressApiTests extends TestBase {
                     .when()
                     .post("/register")
                     .then()
-                    .spec(unsuccessRegistrationResponseSpecification)
+                    .spec(unsuccessResponse400Specification)
                     .extract().as(ResponseRegistrationBodyPojoModel.class);
         });
 
@@ -137,7 +134,7 @@ public class RegressApiTests extends TestBase {
                     .when()
                     .post("/register")
                     .then()
-                    .spec(unsuccessRegistrationResponseSpecification)
+                    .spec(unsuccessResponse400Specification)
                     .extract().as(ResponseRegistrationBodyLombokModel.class);
         });
 
@@ -152,9 +149,10 @@ public class RegressApiTests extends TestBase {
         ResponseListOfUsersLombokModel responseListOfUsersLombokModel = step("Make request", () -> {
             return given(getUsersRequestSpecification)
                     .when()
-                    .get("/users?page=2")
+                    .queryParam("page", "2")
+                    .get("/users")
                     .then()
-                    .spec(successGetUsersResponseSpecification)
+                    .spec(successResponse200Specification)
                     .extract().as(ResponseListOfUsersLombokModel.class);
         });
 
@@ -172,7 +170,7 @@ public class RegressApiTests extends TestBase {
                             .when()
                             .get("/unknown")
                             .then()
-                            .spec(successGetSingleResourceResponseSpecification)
+                            .spec(successResponse200Specification)
                             .extract().as(ResponseSingleResourceLombokModel.class);
                 });
 
